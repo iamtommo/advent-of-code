@@ -2,4 +2,9 @@
 
 (defn advent-of-code-1
   [floors]
-  (reduce + (map #(cond (= \( %) 1 (= \) %) -1 :else 0) floors)))
+  (let [steps (mapv #(cond (= \( %) 1 (= \) %) -1 :else 0) floors)]
+    (println steps)
+    (println "End floor:" (reduce + steps))
+    (println "First basement:" (first (keep-indexed (fn [n _]
+                                                      (when (= (reduce + (take n steps)) -1) n))
+                                                    steps)))))
